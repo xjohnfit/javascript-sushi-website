@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="/sushi.png" type="image/png">
-  <link rel="stylesheet" href="./src/css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/sushi.png" type="image/png" />
+  <link rel="stylesheet" href="./src/css/style.css" />
   <title>SushiMan</title>
 </head>
-<body>
 
+<body>
   <!-- Header Section -->
   <header>
     <nav class="header__nav">
@@ -21,11 +22,15 @@
         <li><a href="#food">Food</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#about-us">About Us</a></li>
-        <li><img src="./src/assets/search.svg" alt="search"></li>
+        <li>
+          <img src="./src/assets/search.svg" alt="search" />
+        </li>
       </ul>
 
       <ul class="header__menu-mobile">
-        <li><img src="./src/assets/menu.svg" alt="menu"></li>
+        <li>
+          <img src="./src/assets/menu.svg" alt="menu" />
+        </li>
       </ul>
     </nav>
   </header>
@@ -33,7 +38,7 @@
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-image">
-      <img src="./src/assets/sushi-1.png" alt="sushi">
+      <img src="./src/assets/sushi-1.png" alt="sushi" />
       <h2>
         日 <br />
         本 <br />
@@ -46,13 +51,18 @@
       <div class="hero-content-info">
         <h1>Experience the Art of Sushi</h1>
         <p>
-          Indulge in the exquisite flavors of our handcrafted sushi, where
-          tradition meets innovation. Each bite is a masterpiece, crafted with
-          the freshest ingredients and a passion for culinary excellence.
+          Indulge in the exquisite flavors of our handcrafted
+          sushi, where tradition meets innovation. Each bite is a
+          masterpiece, crafted with the freshest ingredients and a
+          passion for culinary excellence.
         </p>
         <div class="hero-content__buttons">
-          <button class="hero-content__order-button">Order Now</button>
-          <button class="hero-content__play-button"><img src="./src/assets/play-circle.svg" alt="Play">How to Order</button>
+          <button class="hero-content__order-button">
+            Order Now
+          </button>
+          <button class="hero-content__play-button">
+            <img src="./src/assets/play-circle.svg" alt="Play" />How to Order
+          </button>
         </div>
       </div>
 
@@ -62,26 +72,28 @@
           <p>Happy Customers</p>
         </div>
         <div class="hero-content__review">
-          <img src="./src/assets/user.png" alt="User">
-          <p>This is the best Japanese food delivery service that ever existed</p>
+          <img src="./src/assets/user.png" alt="User" />
+          <p>
+            This is the best Japanese food delivery service that
+            ever existed
+          </p>
         </div>
       </div>
     </div>
-
   </section>
 
   <!-- About Us Section -->
   <section class="about-us" id="about-us">
     <div class="about-us__image">
       <div class="about-us__image-sushi3">
-        <img src="./src/assets/sushi-3.png" alt="Sushi">
+        <img src="./src/assets/sushi-3.png" alt="Sushi" />
       </div>
       <button class="about-us__button">
         Learn More
-        <img src="./src/assets/arrow-up-right.svg" alt="Learn More">
+        <img src="./src/assets/arrow-up-right.svg" alt="Learn More" />
       </button>
       <div class="about-us__image-sushi2">
-        <img src="./src/assets/sushi-2.png" alt="Sushi">
+        <img src="./src/assets/sushi-2.png" alt="Sushi" />
       </div>
     </div>
     <div class="about-us__content">
@@ -90,7 +102,9 @@
         Our mission is to bring true Japanese flavors to you.
       </h3>
       <p class="sushi__description">
-        We will continue to provide the experience of Omotenashi, the Japanese mindset of hospitality, with our shopping and dining for our customers.
+        We will continue to provide the experience of Omotenashi,
+        the Japanese mindset of hospitality, with our shopping and
+        dining for our customers.
       </p>
     </div>
   </section>
@@ -120,16 +134,50 @@
     </div>
 
     <div class="popular-foods__catalog">
-      
+      <article class="popular-foods__card">
+        <img class="popular-foods__card-image" src="./src/assets/sushi-12.png" alt="sushi-12" />
+        <h4 class="popular-foods__card-title">Chezu Sushi</h4>
+        <div class="popular-foods__card-details flex-between">
+          <div class="popular-foods__card-rating">
+            <img src="./src/assets/star.svg" alt="star" />
+            <p>4.9</p>
+          </div>
+          <p class="popular-foods__card-price">$21.00</p>
+        </div>
+      </article>
+
+      <article class="popular-foods__card active-card">
+        <img class="popular-foods__card-image" src="./src/assets/sushi-11.png" alt="sushi-11" />
+        <h4 class="popular-foods__card-title">Original Sushi</h4>
+        <div class="popular-foods__card-details flex-between">
+          <div class="popular-foods__card-rating">
+            <img src="./src/assets/star.svg" alt="star" />
+            <p>4.9</p>
+          </div>
+          <p class="popular-foods__card-price">$21.00</p>
+        </div>
+      </article>
+
+      <article class="popular-foods__card">
+        <img class="popular-foods__card-image" src="./src/assets/sushi-10.png" alt="sushi-10" />
+        <h4 class="popular-foods__card-title">Ramen Legendo</h4>
+        <div class="popular-foods__card-details flex-between">
+          <div class="popular-foods__card-rating">
+            <img src="./src/assets/star.svg" alt="star" />
+            <p>4.7</p>
+          </div>
+          <p class="popular-foods__card-price">$13.00</p>
+        </div>
+      </article>
     </div>
 
     <button class="popular-foods__button">
-      Load More
-      <img src="./src/assets/arrow-up-right.svg" alt="Arrow">
+      Explore Food
+      <img src="./src/assets/arrow-up-right.svg" alt="Arrow" />
     </button>
   </section>
-  
 
   <script type="module" src="./src/js/script.js"></script>
 </body>
+
 </html>
