@@ -17,7 +17,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: sushi-frontend
+            name: sushi
             port:
               number: 80
   # Frontend - www.sushi.codewithxjohn.com
@@ -28,7 +28,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: sushi-frontend
+            name: sushi
             port:
               number: 80
   tls:
