@@ -10,7 +10,7 @@
 @import url("./sections/subscribe.css");
 @import url("./sections/footer.css");
 
-/* CSS variables for reusablity across all files (including above imported) */
+/* CSS variables for reusability across all files (including above imported) */
 :root {
   --playfair-display: "Playfair Display", serif;
   --plus-jakarta-sans: "Plus Jakarta Sans", sans-serif;
@@ -290,7 +290,7 @@ a {
     flex-direction: column;
   }
 
-  .trending-drink {
+  .trending-drinks {
     flex-direction: column-reverse;
   }
 
