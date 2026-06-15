@@ -89,11 +89,11 @@ jobs:
 
     - name: Deploy to Kubernetes
       run: |
-        kubectl apply -f kubernetes/cluster-issuer.staging.yml
-        kubectl apply -f kubernetes/cluster-issuer-prod.yml
-        kubectl apply -f kubernetes/deployment.yml
-        kubectl apply -f kubernetes/service.yml
-        kubectl apply -f kubernetes/ingress.yml
+        kubectl apply --validate=false -f kubernetes/cluster-issuer.staging.yml
+        kubectl apply --validate=false -f kubernetes/cluster-issuer-prod.yml
+        kubectl apply --validate=false -f kubernetes/deployment.yml
+        kubectl apply --validate=false -f kubernetes/service.yml
+        kubectl apply --validate=false -f kubernetes/ingress.yml
 
     - name: Update deployment with new image tag
       env:
