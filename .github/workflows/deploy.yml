@@ -1,0 +1,112 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'kubernetes/**'
+      - 'README.md'
+      - '.gitignore'
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  trivy-scan:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'table'
+        severity: 'CRITICAL,HIGH,MEDIUM'
+        scanners: 'vuln,secret,misconfig'
+        exit-code: '0'
+
+  build-and-push:
+    runs-on: ubuntu-latest
+    needs: [trivy-scan]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Extract metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ secrets.DOCKERHUB_USERNAME }}/sushi
+        tags: |
+          type=sha,prefix={{branch}}-
+          type=raw,value=latest,enable={{is_default_branch}}
+
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/sushi:buildcache
+        cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/sushi:buildcache,mode=max
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build-and-push]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v4
+      with:
+        version: 'latest'
+
+    - name: Set up kubeconfig
+      run: |
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
+        chmod 600 $HOME/.kube/config
+
+    - name: Set image tag
+      id: image-tags
+      run: |
+        echo "IMAGE_TAG=main-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f kubernetes/cluster-issuer.staging.yml
+        kubectl apply -f kubernetes/cluster-issuer-prod.yml
+        kubectl apply -f kubernetes/deployment.yml
+        kubectl apply -f kubernetes/service.yml
+        kubectl apply -f kubernetes/ingress.yml
+
+    - name: Update deployment with new image tag
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        IMAGE_TAG: ${{ steps.image-tags.outputs.IMAGE_TAG }}
+      run: |
+        kubectl set image deployment/sushi sushi=$DOCKERHUB_USERNAME/sushi:$IMAGE_TAG
+
+    - name: Wait for rollout to complete
+      run: |
+        kubectl rollout status deployment/sushi --timeout=5m
+
+    - name: Verify deployment
+      run: |
+        kubectl get pods -l app=sushi
+        kubectl get ingress sushi-ingress
